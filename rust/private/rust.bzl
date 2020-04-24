@@ -169,6 +169,7 @@ def _rust_binary_patch_impl(ctx):
             root = _crate_root_src(ctx, "main.rs"),
             srcs = ctx.files.srcs,
             deps = ctx.attr.deps,
+            type = "cdylib",
             aliases = ctx.attr.aliases,
             output = output,
             edition = _get_edition(ctx, toolchain),
