@@ -152,6 +152,30 @@ def _rust_binary_impl(ctx):
         ),
     )
 
+def _rust_binary_patch_impl(ctx):
+    toolchain = find_toolchain(ctx)
+    crate_name = ctx.label.name.replace("-", "_")
+
+    if (toolchain.target_arch == "wasm32"):
+        output = ctx.actions.declare_file(crate_name + ".wasm")
+    else:
+        output = ctx.actions.declare_file(crate_name)
+
+    return rustc_compile_action(
+        ctx = ctx,
+        toolchain = toolchain,
+        crate_info = CrateInfo(
+            name = crate_name,
+            root = _crate_root_src(ctx, "main.rs"),
+            srcs = ctx.files.srcs,
+            deps = ctx.attr.deps,
+            aliases = ctx.attr.aliases,
+            output = output,
+            edition = _get_edition(ctx, toolchain),
+        ),
+    )
+
+
 def _rust_test_common(ctx, test_binary):
     """
     Builds a Rust test binary.
@@ -436,6 +460,18 @@ _rust_binary_attrs = {
         allow_single_file = True,
     ),
 }
+
+rust_binary_patch = rule(
+    _rust_binary_patch_impl,
+    attrs = dict(_rust_common_attrs.items() + _rust_binary_attrs.items()),
+    executable = True,
+    fragments = ["cpp"],
+    host_fragments = ["cpp"],
+    toolchains = [
+        "@io_bazel_rules_rust//rust:toolchain",
+        "@bazel_tools//tools/cpp:toolchain_type",
+    ],
+)
 
 rust_binary = rule(
     _rust_binary_impl,
