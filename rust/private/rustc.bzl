@@ -354,7 +354,7 @@ def rustc_compile_action(
             # nb. This field is required for cc_library to depend on our output.
             files = depset([crate_info.output]),
             runfiles = runfiles,
-            executable = crate_info.output if crate_info.type == "bin" or crate_info.type == "dylib" else None,
+            executable = crate_info.output,
         ),
     ]
 
