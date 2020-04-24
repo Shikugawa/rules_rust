@@ -17,7 +17,7 @@ load(
     _rust_benchmark = "rust_benchmark",
     _rust_binary = "rust_binary",
     _rust_library = "rust_library",
-    _rust_binary_patch = "rust_binary_patch"
+    _rust_binary_patch = "rust_binary_patch",
     _rust_test = "rust_test",
 )
 load(
@@ -28,6 +28,8 @@ load(
     "@io_bazel_rules_rust//rust:private/rustdoc_test.bzl",
     _rust_doc_test = "rust_doc_test",
 )
+
+rust_binary_patch = _rust_binary_patch
 
 rust_library = _rust_library
 """ See @io_bazel_rules_rust//rust:private/rust.bzl for a complete description. """
