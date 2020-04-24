@@ -346,6 +346,7 @@ def rustc_compile_action(
         collect_data = True,
     )
 
+    print(crate_info)
     return [
         crate_info,
         dep_info,
