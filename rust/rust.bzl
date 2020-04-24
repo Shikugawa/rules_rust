@@ -17,6 +17,7 @@ load(
     _rust_benchmark = "rust_benchmark",
     _rust_binary = "rust_binary",
     _rust_library = "rust_library",
+    _rust_binary_patch = "rust_binary_patch"
     _rust_test = "rust_test",
 )
 load(
